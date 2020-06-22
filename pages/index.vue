@@ -65,7 +65,8 @@ export default {
       list: [],
       page: 1,
       pageSize: 10,
-      total: 0
+      total: 0,
+      searchData: ''
     }
   },
   head() {
@@ -86,12 +87,15 @@ export default {
     showDetail(id) {
       window.open(`article_detail/${id}`)
     },
-    async getList(params = {}, reset = false) {
+    async getList(reset = false) {
       if (reset) {
         this.page = 1
       }
-      params.page = this.page
-      params.pageSize = this.pageSize
+      const params = {
+        page: this.page,
+        pageSize: this.pageSize,
+        keyword: this.searchData
+      }
       this.$nuxt.$loading.start()
       let response = await getList(params)
       this.$nuxt.$loading.finish()
@@ -109,11 +113,8 @@ export default {
   },
   mounted() {
     this.$EventListener.$on('searchThis', searchData => {
-      if (searchData) {
-        this.getList({keyword: searchData}, true)
-      } else {
-        this.getList({}, true)
-      }
+      this.searchData = searchData || ''
+      this.getList(true)
     })
     // this.$nuxt.$loading需要等页面初始化之后
     this.$nextTick(() => {

@@ -469,7 +469,10 @@ const getList = async (author, userId, query) => {
   // 时间反序和分页
   sql += `order by createtime desc limit ${(page - 1) * pageSize}, ${pageSize};`;
   let listData = await exec(sql);
-  const totalSql = `select count(id) from blogs`;
+  let totalSql = `select count(id) from blogs where 1=1 `;
+  if (keyword) {
+    totalSql += `and title like '%${keyword}%' or description like '%${keyword}%'`;
+  }
   const total = await exec(totalSql);
   for (let val of listData) {
     const starSql = `select * from stars where article_id='${val.id}'`;
