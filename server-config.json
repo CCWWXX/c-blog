@@ -1,0 +1,36 @@
+{
+  "dev": {
+    "host": "127.0.0.1",
+    "port": "8002",
+    "secret_key": "ccc1456#",
+    "MYSQL_CONF": {
+      "host": "localhost",
+      "user": "root",
+      "password": "a123456",
+      "port": "3306",
+      "database": "myblog"
+    },
+    "REDIS_CONF": {
+      "port": "6379",
+      "host": "127.0.0.1",
+      "redisKeys": ["ccc456#555_"]
+    }
+  },
+  "prod": {
+    "host": "127.0.0.1",
+    "port": "8003",
+    "secret_key": "ccc1456#",
+    "MYSQL_CONF": {
+      "host": "localhost",
+      "user": "root",
+      "password": "a123456",
+      "port": "3306",
+      "database": "myblog"
+    },
+    "REDIS_CONF": {
+      "port": "6379",
+      "host": "127.0.0.1",
+      "redisKeys": ["ccc456#555_"]
+    }
+  }
+}

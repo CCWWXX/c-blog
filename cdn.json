@@ -1,0 +1,9 @@
+{
+    "js": [
+        {
+            "src": "https://cdn.staticfile.org/particles.js/2.0.0/particles.min.js"
+        }
+    ],
+    "css": [
+    ]
+}
