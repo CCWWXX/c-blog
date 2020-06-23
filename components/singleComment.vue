@@ -36,8 +36,11 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    replyThis() {
-      this.$emit('replyThis', this.commentData)
+    replyThis(data) {
+      // data默认为点击事件e
+      // 子组件有传值过来就取传过来的值，没有就取当前commentData
+      data = data.author ? data : this.commentData
+      this.$emit('replyThis', data)
     }
   },
   created() {

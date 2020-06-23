@@ -113,7 +113,7 @@ export default {
           return item.parent_id === val.id
         })
       }
-      this.commentList = list
+      this.commentList = parentList
     },
     replyThis(commentData) {
       this.$refs.textarea.focus()
