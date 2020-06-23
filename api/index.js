@@ -12,6 +12,10 @@ export function logout(params) {
   return request({ url: '/api/user/logout', params, method: 'get' })
 }
 
+export function register(params) {
+  return request({ url: '/api/user/register', params, method: 'post' })
+}
+
 // blog相关
 export function getList(params) {
   return request({ url: '/api/blog/list', params, method: 'get' })

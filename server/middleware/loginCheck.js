@@ -1,3 +1,6 @@
+/**
+ * 验证登陆
+ */
 const { ErrorModel } = require('../model/resModel')
 
 module.exports = async (ctx, next) => {

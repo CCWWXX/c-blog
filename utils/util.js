@@ -12,25 +12,29 @@ let setCookie = function (key, value, exdays) {
  *  读取cookie
  * */
 let getCookie = function (key = null) {
-  if (document.cookie.length > 0) {
-    let arr = document.cookie.split('; ') // 这里显示的格式需要切割一下自己可输出看下
-    let object = {}
-    for (let i = 0; i < arr.length; i++) {
-      let arr2 = arr[i].split('=')
-      object[arr2[0]] = arr2[1]
+  let value = null
+  const allcookies = document.cookie
+  // key开始索引的位置
+  let keyStart = allcookies.indexOf(key)
+  // 如果找到了key索引，就代表cookie存在,否则不存在
+  if (keyStart !== -1) {
+    // 计算取cookie值的开始索引，加的1为“=”
+    const cookieStart = keyStart + key.length + 1
+    // 计算取cookie值的结束索引
+    let cookieEnd = allcookies.indexOf('; ', cookieStart)
+    if (cookieEnd === -1) {
+      cookieEnd = allcookies.length
     }
-    if (key) {
-      return object[key]
-    } else {
-      return object
-    }
+    // 得到想要的cookie的值
+    value = allcookies.substring(cookieStart, cookieEnd)
   }
+  return value
 }
 /**
  *  清除cookie
  * */
 let removeCookie = function (key) {
-  setCookie(key, '', -1) // 修改2值都为空，天数为负1天就好了
+  setCookie(key, '', -1) // 修改值都为空，天数为负1天
 }
 export default {
   setCookie,

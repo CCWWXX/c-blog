@@ -1,7 +1,8 @@
 const router = require('koa-router')()
-const { login } = require('../controller/user')
+const { login, register } = require('../controller/user')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 const loginCheck = require('../middleware/loginCheck')
+const registerCheck = require('../middleware/registerCheck')
 
 router.prefix('/api/user')
 
@@ -28,7 +29,7 @@ router.get('/info', loginCheck, async function (ctx, next) {
   if (data) {
     ctx.body = new SuccessModel(data)
   } else {
-    ctx.body = new ErrorModel('更新博客失败')
+    ctx.body = new ErrorModel('获取用户信息失败')
   }
 })
 
@@ -37,6 +38,16 @@ router.get('/logout', loginCheck, async function (ctx, next) {
   ctx.session.realname = null
   ctx.session.user_id = null
   ctx.body = new SuccessModel('注销成功')
+})
+
+router.post('/register', registerCheck, async function (ctx, next) {
+  const { username, realname, password } = ctx.request.body
+  const data = await register(username, realname, password)
+  if (data) {
+    ctx.body = new SuccessModel('注册成功')
+  } else {
+    ctx.body = new ErrorModel('注册失败')
+  }
 })
 
 module.exports = router

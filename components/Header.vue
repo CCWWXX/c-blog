@@ -24,7 +24,11 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <nuxt-link to="/login" class="link_item" v-else>登陆</nuxt-link>
+        <div v-else class="login_wrap">
+          <nuxt-link to="/login" class="link_item">登陆</nuxt-link>
+          <span class="line">&nbsp;/&nbsp;</span>
+          <nuxt-link to="/register" class="link_item">注册</nuxt-link>
+        </div>
     </div>
     <div class="left_wrap">
         <img src='../assets/img/logo.png' @click="intoHome">
@@ -109,12 +113,6 @@ export default {
     height: 100%;
   }
 }
-.link_item {
-    color: #409eff !important;
-    &:hover {
-      color:#40b6ff !important;
-    }
-}
 .topBar {
   background: #fff;
   height: 66px;
@@ -153,6 +151,21 @@ export default {
             padding: 0;
             text-align: center;
           }
+        }
+      }
+      .login_wrap {
+        display: flex;
+        align-items: center;
+        height: 30px;
+        .line {
+          color: #9aabbd !important;
+        }
+        .link_item {
+            line-height: 100%;
+            color: #409eff !important;
+            &:hover {
+              color:#40b6ff !important;
+            }
         }
       }
       i {

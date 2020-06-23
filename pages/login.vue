@@ -32,9 +32,12 @@
           class="input"
         ></el-input>
       </el-form-item>
-      <el-form-item class="check_wrap">
-        <el-checkbox v-model="isRemember">记住密码</el-checkbox>
-      </el-form-item>
+      <div class="middle_wrap">
+        <el-form-item class="check_wrap">
+          <el-checkbox v-model="isRemember">记住密码</el-checkbox>
+        </el-form-item>
+        <nuxt-link to="/register" class="register_btn">去注册</nuxt-link>
+      </div>
       <el-form-item>
         <el-button
           type="primary"
@@ -54,6 +57,9 @@ import { login } from '@/api/index'
 import LoginBack from '@/components/LoginBack'
 export default {
   name: 'login',
+  head: {
+    title: 'c-blog/登陆'
+  },
   data() {
     const validateUseraccount = (rule, value, callback) => {
       if (value.trim().length < 1) {
@@ -126,9 +132,6 @@ export default {
     }
   },
   mounted() {
-    // console.log(2222, this.$dayjs(new Date()).format('HH:mm:ss YYYY-MM-DD'))
-    // console.log(3333, _)
-    // console.log(process.env.NODE_ENV)
     const loginInfo = util.getCookie('loginInfo')
     if (loginInfo) {
       let infoArr = loginInfo.split('&')
@@ -183,9 +186,18 @@ export default {
     .password_wrap {
       margin-bottom: 15px;
     }
-    .check_wrap {
-      ::v-deep .el-form-item__content {
-        line-height: unset;
+    .middle_wrap {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      .check_wrap {
+        ::v-deep .el-form-item__content {
+          line-height: unset;
+        }
+      }
+      .register_btn {
+         margin-bottom: 22px;
+         color: #409EFF;
       }
     }
   }
