@@ -20,7 +20,7 @@
             </span>
         </div>
       </div>
-      <comment v-if="isMount" :articleId="detail.id"></comment>
+      <comment v-if="isMount" :articleId="detail.id" @change="commentChange"></comment>
     </div>
 </template>
 
@@ -65,7 +65,7 @@ export default {
         }
         this.getDetail(0, !this.detail.isStar)
       } else {
-        this.$message.success('操作失败')
+        this.$message.error(response.message)
       }
     },
     async getDetail(newView = 0, isStar = false) {
@@ -82,6 +82,10 @@ export default {
       if (response.data) {
         this.$set(this.detail, 'isStar', !!response.data.isStar)
       }
+    },
+    // 评论后改变当前评论数
+    commentChange(data) {
+      this.detail.comments = data.length
     }
   },
   beforeMount() {

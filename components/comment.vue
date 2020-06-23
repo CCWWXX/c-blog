@@ -34,31 +34,7 @@ export default {
       parentId: null,
       loading: false,
       comment: '',
-      commentList: [
-        // {
-        //   id: 1,
-        //   comment_time: '2010-10-5 12:50:30',
-        //   avatar: '',
-        //   content: 'dasdas',
-        //   author: 'xiaoming',
-        //   children: [
-        //     {
-        //       id: 2,
-        //       comment_time: '2010-10-5 12:50:30',
-        //       avatar: '',
-        //       content: 'dasdasdasdasasasa',
-        //       author: 'xiaoming'
-        //     },
-        //     {
-        //       id: 3,
-        //       comment_time: '2010-10-5 12:50:30',
-        //       avatar: '',
-        //       content: 'dasdasdasdasasasa',
-        //       author: 'xiaoming'
-        //     }
-        //   ]
-        // }
-      ]
+      commentList: []
     }
   },
   computed: {},
@@ -98,6 +74,7 @@ export default {
       }
       let response = await getComment(params)
       if (response.data) {
+        this.$emit('change', response.data)
         this.handleData(response.data)
       }
     },

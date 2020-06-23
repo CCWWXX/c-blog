@@ -26,6 +26,12 @@ const getList = async (author, userId, query) => {
     const starData = await exec(starSql)
     // 该文章点赞数
     val.stars = starData.length
+
+    const commentSql = `select * from comments where article_id='${val.id}'`
+    const commentData = await exec(commentSql)
+    // 该文字评论数
+    val.comments = commentData.length
+
     // 当前用户是否点赞该文章
     let isStart
     if (userId) {
@@ -54,6 +60,12 @@ const getDetail = async (id, newView) => {
   const rows = await exec(sql)
   // 该文章点赞数
   rows[0].stars = starData.length
+
+  const commentSql = `select * from comments where article_id='${id}'`
+  const commentData = await exec(commentSql)
+  // 该文字评论数
+  rows[0].comments = commentData.length
+
   // // 判断当前用户是否点赞
   // let isStart = !!starData.find(item => item.user_id === userId)
   // rows[0].isStar = isStart

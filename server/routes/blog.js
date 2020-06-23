@@ -39,7 +39,7 @@ router.get('/detail', async function (ctx, next) {
   ctx.body = new SuccessModel(data)
 })
 
-router.post('/star', async function (ctx, next) {
+router.post('/star', loginCheck, async function (ctx, next) {
   const userId = ctx.session.user_id
   const data = await starBlog(userId, ctx.request.body)
   if (data) {
