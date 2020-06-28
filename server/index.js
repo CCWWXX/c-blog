@@ -1,16 +1,16 @@
 const Koa = require('koa')
 const { Nuxt, Builder } = require('nuxt')
 
-const json = require('koa-json')
+// const json = require('koa-json')
 const onerror = require('koa-onerror')
 // const bodyparser = require('koa-bodyparser')
 const koaBody = require('koa-body') // 解析上传文件的插件
-const logger = require('koa-logger')
+// const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 const path = require('path')
-const fs = require('fs')
-const morgan = require('koa-morgan')
+// const fs = require('fs')
+// const morgan = require('koa-morgan')
 const KoaStatic = require('koa-static')
 
 const blog = require('./routes/blog')
@@ -37,11 +37,12 @@ async function start() {
   // }))
   app.use(koaBody({
     multipart: true,
+    strict: false, // 可解析其他请求方法，如delete, get
     formidable: {
       maxFileSize: 2000 * 1024 * 1024    // 设置上传文件大小最大限制，默认2M
     }
   }))
-  app.use(json())
+  // app.use(json())
   // app.use(logger())
 
 // logger

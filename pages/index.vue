@@ -85,7 +85,7 @@ export default {
       this.getList()
     },
     showDetail(id) {
-      window.open(`article_detail/${id}`)
+      window.open(`blog_detail/${id}`)
     },
     async getList(reset = false) {
       if (reset) {

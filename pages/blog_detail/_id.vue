@@ -20,7 +20,7 @@
             </span>
         </div>
       </div>
-      <comment v-if="isMount" :articleId="detail.id" @change="commentChange"></comment>
+      <comment :articleId="detail.id" @change="commentChange"></comment>
     </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
   },
   async asyncData({params, redirect, store}) {
     let response = await getDetail({ id: params.id, newView: 1 })
-    if (!response.data) {
+    if (!response) {
       return redirect('/404')
     }
     return {
@@ -44,8 +44,7 @@ export default {
   },
   data() {
     return {
-      detail: {},
-      isMount: false
+      detail: {}
     }
   },
   computed: {
@@ -76,7 +75,7 @@ export default {
       this.detail = response.data
       this.detail.isStar = isStar
     },
-    // 服务端渲染无法传递cookie，需cookie验证的需单独拿出来
+    // 服务端渲染需cookie验证的需单独拿出来
     async checkStar() {
       let response = await checkStar({ article_id: this.detail.id })
       if (response.data) {
@@ -91,13 +90,7 @@ export default {
   beforeMount() {
     this.checkStar()
   },
-  mounted() {
-    this.$nextTick(() => {
-      // 里面用的插件需要mount之后才能使用
-      // 异步获取数据渲染应该就不需要
-      this.isMount = true
-    })
-  }
+  mounted() {}
 }
 </script>
 <style lang='scss' scoped>

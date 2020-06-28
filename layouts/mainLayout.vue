@@ -26,7 +26,7 @@ export default {
     position: relative;
 }
 .main_wrap {
-  min-width: 1200px;
+  min-width: $min-width;
   color: #282828;
 }
 </style>

@@ -45,7 +45,7 @@ export default {
     }
   },
   mounted() {
-    console.log('app init, my quill insrance object is:', this.myQuillEditor)
+    // console.log('app init, my quill insrance object is:', this.myQuillEditor)
   },
   methods: {
     onEditorBlur(editor) {

@@ -50,7 +50,7 @@ module.exports = {
   },
   styleResources: {
     scss: [
-      '@/assets/vars/*.scss' // 自己项目中的样式文件的路径
+      '@/assets/vars/*.scss' // 样式文件，如样式变量
     ]
   },
   plugins: [

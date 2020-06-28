@@ -6,7 +6,9 @@ const {
   checkStar,
   newBlog,
   createComment,
-  getComment
+  getComment,
+  updateBlog,
+  deleteBlog
 } = require('../controller/blog')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 const loginCheck = require('../middleware/loginCheck')
@@ -17,13 +19,12 @@ router.prefix('/api/blog')
 
 router.get('/list', async function (ctx, next) {
   let author = ctx.query.author || ''
-  if (ctx.query.isadmin) {
-    console.log('is admin')
+  if (ctx.query.isAdmin) {
     // 管理员界面
     if (ctx.session.username == null) {
-      console.error('is admin, but no login')
+      console.error('request is admin, but no login')
       // 未登录
-      ctx.body = new ErrorModel('未登录')
+      ctx.body = new ErrorModel('未登录或登陆信息已失效')
       return
     }
     // 强制查询自己的博客
@@ -81,6 +82,26 @@ router.post('/createComment', loginCheck, async function (ctx, next) {
 router.get('/comment', async function (ctx, next) {
   const data = await getComment(ctx.query)
   ctx.body = new SuccessModel(data)
+})
+
+router.post('/update', loginCheck, async function (ctx, next) {
+  const body = ctx.request.body
+  const val = await updateBlog(body)
+  if (val) {
+    ctx.body = new SuccessModel('更新博客成功')
+  } else {
+    ctx.body = new ErrorModel('更新博客失败')
+  }
+})
+
+router.delete('/delete', loginCheck, async function (ctx, next) {
+  const author = ctx.session.username
+  const val = await deleteBlog(ctx.request.body.id, author)
+  if (val) {
+    ctx.body = new SuccessModel('删除博客成功')
+  } else {
+    ctx.body = new ErrorModel('删除博客失败')
+  }
 })
 
 module.exports = router

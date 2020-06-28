@@ -5,7 +5,7 @@ const dayjs = require('dayjs')
 const getList = async (author, userId, query) => {
   const keyword = query.keyword || ''
   const page = query.page || 1
-  const pageSize = query.page_size || 10
+  const pageSize = query.pageSize || 10
   let sql = `select * from blogs where 1=1 `
   if (author) {
     sql += `and author='${author}' `
@@ -13,14 +13,11 @@ const getList = async (author, userId, query) => {
   if (keyword) {
     sql += `and title like '%${keyword}%' or description like '%${keyword}%'`
   }
+  // 获取总条数
+  const total = await exec(sql)
   // 时间反序和分页
   sql += `order by createtime desc limit ${(page - 1) * pageSize}, ${pageSize};`
   let listData = await exec(sql)
-  let totalSql = `select count(id) from blogs where 1=1 `
-  if (keyword) {
-    totalSql += `and title like '%${keyword}%' or description like '%${keyword}%'`
-  }
-  const total = await exec(totalSql)
   for (let val of listData) {
     const starSql = `select * from stars where article_id='${val.id}'`
     const starData = await exec(starSql)
@@ -43,7 +40,7 @@ const getList = async (author, userId, query) => {
     listData: listData,
     page: page,
     pageSize: pageSize,
-    total: total[0]['count(id)']
+    total: total.length
   }
   return data
 }
@@ -147,6 +144,32 @@ const getComment = async (query) => {
   return data
 }
 
+const updateBlog = async (blogData = {}) => {
+  const id = blogData.id
+  const title = xss(blogData.title)
+  // xss会影响富文本
+  const content = blogData.content
+  const description = xss(blogData.description)
+  const logo = xss(blogData.logo)
+  const sql = `
+        update blogs set title='${title}', content='${content}', description='${description}', logo='${logo}' where id=${id}
+    `
+  const updateData = await exec(sql)
+  if (updateData.affectedRows > 0) {
+    return true
+  }
+  return false
+}
+
+const deleteBlog = async (id, author) => {
+  const sql = `delete from blogs where id='${id}' and author='${author}';`
+  const delData = await exec(sql)
+  if (delData.affectedRows > 0) {
+    return true
+  }
+  return false
+}
+
 module.exports = {
   getList,
   getDetail,
@@ -154,5 +177,7 @@ module.exports = {
   checkStar,
   newBlog,
   createComment,
-  getComment
+  getComment,
+  updateBlog,
+  deleteBlog
 }

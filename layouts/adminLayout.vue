@@ -3,7 +3,9 @@
     <Header/>
     <div class="flex_wrap">
       <NavMenu/>
-      <nuxt/>
+      <div class="content_wrap">
+        <nuxt/>
+      </div>
     </div>
   </div>
 </template>
@@ -31,13 +33,19 @@ export default {
     position: relative;
 }
 .main_wrap {
-  min-width: 1200px;
+  min-width: $min-width;
   color: #282828;
   display: flex;
   flex-direction: column;
-}
-.flex_wrap {
-  height: 100%;
-  display: flex;
+  .flex_wrap {
+    display: flex;
+    height: calc(100% - 67px);
+    overflow: hidden;
+    .content_wrap {
+      flex: 1;
+      height: 100%;
+      overflow-y: scroll;
+    }
+  }
 }
 </style>

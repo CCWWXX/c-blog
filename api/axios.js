@@ -12,7 +12,7 @@ const request = ({ url, params = {}, method = 'post', baseURL = '', isformData =
       // 'Content-Type': 'application/json'
     }
   }
-  if (method === 'get') {
+  if (method === 'get' || method === 'GET') {
     config.params = params
   } else {
     config.data = qs.stringify(params)

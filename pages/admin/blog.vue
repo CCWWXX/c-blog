@@ -26,14 +26,14 @@
           <MyEditor v-model="formData.content"></MyEditor>
         </div>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" :disabled="!allowSubmit" :loading="isLoading">立即创建</el-button>
+          <el-button type="primary" @click="onSubmit" :disabled="!allowSubmit" :loading="isLoading">{{ blog_id? '提交编辑':'立即创建'}}</el-button>
         </el-form-item>
      </el-form>
   </div>
 </template>
 
 <script>
-import { createBlog } from '@/api/index'
+import { createBlog, getDetail, updateBlog } from '@/api/index'
 import MyEditor from '@/components/MyEditor.vue'
 export default {
   layout: 'adminLayout',
@@ -42,6 +42,7 @@ export default {
   },
   data() {
     return {
+      blog_id: null,
       rules: {},
       formData: {
         title: '',
@@ -59,7 +60,14 @@ export default {
   },
   watch: {},
   methods: {
-    async onSubmit() {
+    onSubmit() {
+      if (this.blog_id) {
+        this.updateBlog()
+      } else {
+        this.createBlog()
+      }
+    },
+    async createBlog() {
       this.isLoading = true
       let response = await createBlog(this.formData)
       this.isLoading = false
@@ -72,6 +80,25 @@ export default {
           logo: ''
         }
       }
+    },
+    async updateBlog() {
+      this.isLoading = true
+      let params = {
+        id: this.blog_id,
+        ...this.formData
+      }
+      let response = await updateBlog(params)
+      this.isLoading = false
+      if (!response.errno) {
+        this.$message.success('编辑成功')
+      }
+    },
+    async getDetail(newView = 0, isStar = false) {
+      let response = await getDetail({ id: this.blog_id, newView: newView })
+      if (!response) {
+        return this.$router.push('/404')
+      }
+      this.formData = response.data
     },
     handleAvatarSuccess(res, file) {
       this.formData.logo = res.data.url
@@ -90,7 +117,12 @@ export default {
   created() {
 
   },
-  beforeMount() {}
+  beforeMount() {
+    if (this.$route.query.blog_id) {
+      this.blog_id = this.$route.query.blog_id
+      this.getDetail()
+    }
+  }
 }
 </script>
 <style lang='scss' scoped>

@@ -54,7 +54,7 @@ export default {
         {
           name: '系统管理',
           id: '1',
-          path: '/admin/article'
+          path: '/admin/blog'
         },
         {
           name: '注销',

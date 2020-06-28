@@ -27,16 +27,20 @@ export default {
   components: {},
   data() {
     return {
-      activeMenu: '',
       menuList: [
         {
           text: '内容管理',
           id: '1',
           children: [
             {
-              text: '创建/编辑文章',
-              path: '/admin/article',
+              text: '创建/编辑博客',
+              path: '/admin/blog',
               id: '1-1'
+            },
+            {
+              text: '博客管理',
+              path: '/admin/blog_manage',
+              id: '1-2'
             }
           ]
         }
@@ -44,13 +48,8 @@ export default {
     }
   },
   computed: {
-  },
-  watch: {
-    $route: {
-      immediate: true,
-      handler(val) {
-        this.activeMenu = val.fullPath
-      }
+    activeMenu() {
+      return this.$route.path
     }
   },
   methods: {

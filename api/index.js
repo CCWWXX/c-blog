@@ -48,3 +48,11 @@ export function createComment(params) {
 export function getComment(params) {
   return request({ url: '/api/blog/comment', params, method: 'get' })
 }
+
+export function updateBlog(params) {
+  return request({ url: '/api/blog/update', params, method: 'post' })
+}
+
+export function deleteBlog(params) {
+  return request({ url: '/api/blog/delete', params, method: 'delete' })
+}
