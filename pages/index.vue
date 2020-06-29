@@ -87,7 +87,7 @@ export default {
     showDetail(id) {
       window.open(`blog_detail/${id}`)
     },
-    async getList(reset = false) {
+    async getList(reset = false, type) {
       if (reset) {
         this.page = 1
       }
@@ -100,7 +100,8 @@ export default {
       let response = await getList(params)
       this.$nuxt.$loading.finish()
       if (response.data) {
-        if (!response.data.listData.length) {
+        // search时找不到数据提示
+        if (!response.data.listData.length && type === 'search') {
           this.$message.warning('找不到匹配数据')
         }
         this.list = response.data.listData
@@ -114,7 +115,7 @@ export default {
   mounted() {
     this.$EventListener.$on('searchThis', searchData => {
       this.searchData = searchData || ''
-      this.getList(true)
+      this.getList(true, 'search')
     })
     // this.$nuxt.$loading需要等页面初始化之后
     this.$nextTick(() => {

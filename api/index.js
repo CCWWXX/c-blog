@@ -16,6 +16,10 @@ export function register(params) {
   return request({ url: '/api/user/register', params, method: 'post' })
 }
 
+export function updateUser(params) {
+  return request({ url: '/api/user/update', params, method: 'post' })
+}
+
 // blog相关
 export function getList(params) {
   return request({ url: '/api/blog/list', params, method: 'get' })

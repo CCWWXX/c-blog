@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { createComment, getComment } from '@/api/index'
 import singleComment from '@/components/singleComment.vue'
 export default {
@@ -37,7 +38,11 @@ export default {
       commentList: []
     }
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      userInfo: 'userInfo'
+    })
+  },
   watch: {},
   methods: {
     async submit() {
@@ -45,6 +50,7 @@ export default {
       const params = {
         article_id: this.articleId,
         content: this.comment,
+        avatar: this.userInfo.avatar,
         parent_id: this.parentId ? this.parentId : -1
       }
       let response = await createComment(params)

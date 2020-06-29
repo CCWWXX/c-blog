@@ -43,7 +43,6 @@ export default {
   data() {
     return {
       searchData: '',
-      defaultUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       currentPath: '',
       dropDownList: [
         {
@@ -66,10 +65,14 @@ export default {
   },
   computed: {
     ...mapState({
-      isLogin: 'isLogin'
+      isLogin: 'isLogin',
+      userInfo: 'userInfo'
     }),
     isIndex() {
       return this.$route.fullPath === '/'
+    },
+    defaultUrl() {
+      return this.userInfo.avatar || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
     }
   },
   watch: {},

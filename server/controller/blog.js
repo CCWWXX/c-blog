@@ -102,11 +102,12 @@ const newBlog = async (blogData = {}) => {
   const description = xss(blogData.description)
   const logo = xss(blogData.logo)
   const author = blogData.author
+  const authorAvatar = blogData.author_avatar
   const createTime = dayjs(Date.now()).format('YYYY-MM-DD HH:mm:ss')
 
   const sql = `
-        insert into blogs (title, content, description, logo, createtime, author)
-        values ('${title}', '${content}', '${description}', '${logo}', '${createTime}', '${author}');
+        insert into blogs (title, content, description, logo, createtime, author, author_avatar)
+        values ('${title}', '${content}', '${description}', '${logo}', '${createTime}', '${author}', '${authorAvatar}');
     `
 
   const insertData = await exec(sql)
@@ -123,11 +124,12 @@ const createComment = async (userId, blogData = {}) => {
   const content = xss(blogData.content)
   const parentId = blogData.parent_id || -1
   const articleId = blogData.article_id
+  const avatar = blogData.avatar
   const commentTime = dayjs(Date.now()).format('YYYY-MM-DD HH:mm:ss')
 
   const sql = `
-        insert into comments (author, content, comment_time, user_id, parent_id, article_id)
-        values ('${author}', '${content}', '${commentTime}', '${userId}', '${parentId}', '${articleId}');
+        insert into comments (author, content, comment_time, avatar, user_id, parent_id, article_id)
+        values ('${author}', '${content}', '${commentTime}', '${avatar}', '${userId}', '${parentId}', '${articleId}');
     `
 
   const insertData = await exec(sql)

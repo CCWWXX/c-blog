@@ -8,7 +8,7 @@
           @open="handleOpen"
           @close="handleClose">
           <div v-for="items in menuList" :key="items.id">
-            <el-submenu :index="items.id">
+            <el-submenu :index="items.id" v-if="items.children">
               <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>{{ items.text }}</span>
@@ -17,6 +17,9 @@
                   <nuxt-link :to="item.path">{{item.text}}</nuxt-link>
                 </el-menu-item>
             </el-submenu>
+            <el-menu-item :index="items.path" v-else>
+              <nuxt-link :to="items.path">{{items.text}}</nuxt-link>
+            </el-menu-item>
           </div>
         </el-menu>
     </div>
@@ -29,7 +32,7 @@ export default {
     return {
       menuList: [
         {
-          text: '内容管理',
+          text: '系统管理',
           id: '1',
           children: [
             {
@@ -43,6 +46,11 @@ export default {
               id: '1-2'
             }
           ]
+        },
+        {
+          text: '个人设置',
+          id: '2',
+          path: '/admin/setting'
         }
       ]
     }

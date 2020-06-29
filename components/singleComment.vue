@@ -2,7 +2,7 @@
 <template>
   <div class='singleComment'>
     <div class="left">
-        <el-avatar size="large" :src="defaultUrl"></el-avatar>
+        <el-avatar size="large" :src="commentData.avatar || defaultUrl"></el-avatar>
     </div>
     <div class="right">
       <div class="top">

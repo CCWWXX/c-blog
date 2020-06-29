@@ -2,6 +2,7 @@
   "dev": {
     "host": "127.0.0.1",
     "port": "8002",
+    "img_base_url": "http://127.0.0.1:8002",
     "secret_key": "ccc1456#",
     "MYSQL_CONF": {
       "host": "localhost",
@@ -17,8 +18,9 @@
     }
   },
   "prod": {
-    "host": "127.0.0.1",
+    "host": "0.0.0.0",
     "port": "8003",
+    "img_base_url": "http://127.0.0.1:8003",
     "secret_key": "ccc1456#",
     "MYSQL_CONF": {
       "host": "localhost",

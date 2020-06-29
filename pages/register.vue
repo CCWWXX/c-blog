@@ -177,7 +177,7 @@ export default {
     // align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    padding: 22px 30px 0;
+    padding: 22px 30px 22px;
     width: 320px;
     // height: 230px;
     background: rgba(255, 255, 255, 0.6);
@@ -195,21 +195,13 @@ export default {
     .label {
       line-height: 20px;
     }
-    .is-required {
-      .label {
-        &::after {
-          content: '*';
-          color: #e90707;
-        }
-      }
-    }
     .bottom_wrap {
       display: flex;
       justify-content: space-between;
       font-size: 14px;
       margin-top: 5px;
       .register_btn {
-         margin-bottom: 22px;
+        //  margin-bottom: 22px;
          color: #409EFF;
       }
     }

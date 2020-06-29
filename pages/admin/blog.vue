@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { createBlog, getDetail, updateBlog } from '@/api/index'
 import MyEditor from '@/components/MyEditor.vue'
 export default {
@@ -56,7 +57,10 @@ export default {
   computed: {
     allowSubmit() {
       return this.formData.title.trim().length && this.formData.content.trim().length
-    }
+    },
+    ...mapState({
+      userInfo: 'userInfo'
+    })
   },
   watch: {},
   methods: {
@@ -69,7 +73,11 @@ export default {
     },
     async createBlog() {
       this.isLoading = true
-      let response = await createBlog(this.formData)
+      let params = {
+        author_avatar: this.userInfo.avatar,
+        ...this.formData
+      }
+      let response = await createBlog(params)
       this.isLoading = false
       if (!response.errno) {
         this.$message.success('创建成功')
