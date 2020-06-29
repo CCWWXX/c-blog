@@ -1,6 +1,8 @@
 # c-blog
 
-> 个人服务端渲染(ssr)博客
+> 个人服务端渲染(ssr)博客<br>
+> 使用 nuxt.js + koa2 + mysql + redis + element
+
 
 ## Build Setup
 
